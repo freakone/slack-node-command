@@ -1,0 +1,16 @@
+{
+  "name": "slack-node-command",
+  "version": "1.0.0",
+  "description": "Slack localizator",
+  "repository": "freakone/slack-node-command",
+  "main": "slack.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "freakone",
+  "license": "ISC",
+  "dependencies": {
+    "@slack/client": "^3.5.0",
+    "artikcloud-js": "github:artikcloud/artikcloud-js"
+  }
+}
