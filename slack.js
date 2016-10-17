@@ -25,19 +25,17 @@ function constructOpts(username)
   };
 }
 
-var beaconsMap = [{'name':'is in the kitchen', 'minor':'1', 'major':'11111'},
-{'name':'is in the fun room', 'minor':'2', 'major':'11111'},
-{'name':'is in the green room', 'minor':'3', 'major':'11111'},
-{'name':'has just entered the office', 'minor':'4', 'major':'11111'},
-{'name':'is in the Kazimierza', 'minor':'5', 'major':'11111'},
-{'name':'is in the chill zone', 'minor':'6', 'major':'11111'},
-{'name':'is in the balcony', 'minor':'7', 'major':'11111'},
-{'name':'is in the kebabista room', 'minor':'8', 'major':'11111'},
-{'name':'is in the blue room', 'minor':'9', 'major':'11111'},
-{'name':'is in the lower open-space', 'minor':'10', 'major':'11111'},
+var beaconsMap = [{'name':'is in the green room', 'minor':'14', 'major':'11111'},
+{'name':'is in the lower open-space', 'minor':'3', 'major':'11111'},
 {'name':'is making coffee', 'minor':'11', 'major':'11111'},
-{'name':'is in the upper open-space', 'minor':'12', 'major':'11111'},
-{'name':'is in the amfiteather', 'minor':'13', 'major':'11111'}]
+{'name':'is in the kitchen', 'minor':'1', 'major':'11111'},
+{'name':'is in the balcony', 'minor':'7', 'major':'11111'},
+{'name':'is in the upper open-space', 'minor':'2', 'major':'11111'},
+{'name':'has just entered the office (Pałólinas desk)', 'minor':'12', 'major':'11111'},
+{'name':'is in the kebabista room', 'minor':'8', 'major':'11111'},
+{'name':'is in the Kazimierza', 'minor':'5', 'major':'11111'},
+{'name':'is in the fun room', 'minor':'4', 'major':'11111'}
+]
 
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
   if(typeof message.text === 'string') {
@@ -51,7 +49,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
               return el.minor == beacon.minor && el.major == beacon.major;
             });
             if(localization){
-              rtm.sendMessage(`<@${message.user}>: <@${mentionedUser}> is ${localization.name}`, message.channel);
+              rtm.sendMessage(`<@${message.user}>: <@${mentionedUser}> ${localization.name}`, message.channel);
             } else {
               rtm.sendMessage(`<@${message.user}>: Unknown beacon! \`${JSON.stringify(beacon)}\``, message.channel);
             }
