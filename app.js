@@ -25,16 +25,16 @@ function constructOpts(username)
   };
 }
 
-var beaconsMap = [{'name':'is in the green room', 'minor':'14', 'major':'11111'},
-{'name':'is in the lower open-space', 'minor':'3', 'major':'11111'},
-{'name':'is making coffee', 'minor':'11', 'major':'11111'},
-{'name':'is in the kitchen', 'minor':'1', 'major':'11111'},
-{'name':'is in the balcony', 'minor':'7', 'major':'11111'},
-{'name':'is in the upper open-space', 'minor':'2', 'major':'11111'},
-{'name':'has just entered the office (Pałólinas desk)', 'minor':'12', 'major':'11111'},
-{'name':'is in the kebabista room', 'minor':'8', 'major':'11111'},
-{'name':'is in the Kazimierza', 'minor':'5', 'major':'11111'},
-{'name':'is in the fun room', 'minor':'4', 'major':'11111'}
+var beaconsMap = [{'name':'Green room', 'message':'is in the green room', 'minor':'14', 'major':'11111'},
+{'name':'Lower open-space', 'message':'is in the lower open-space', 'minor':'3', 'major':'11111'},
+{'name':'Coffee machine', 'message':'is making coffee', 'minor':'11', 'major':'11111'},
+{'name':'Kitchen', 'message':'is in the kitchen', 'minor':'1', 'major':'11111'},
+{'name':'Balcony', 'message':'is in the balcony', 'minor':'7', 'major':'11111'},
+{'name':'Upper open-space', 'message':'is in the upper open-space', 'minor':'2', 'major':'11111'},
+{'name':'Entrance (Pałólinas desk)', 'message':'has just entered the office (Pałólinas desk)', 'minor':'12', 'major':'11111'},
+{'name':'Kebab', 'message':'is in the kebabista room', 'minor':'8', 'major':'11111'},
+{'name':'Kazimierza', 'message':'is in the Kazimierza', 'minor':'5', 'major':'11111'},
+{'name':'Fun room', 'message':'is in the fun room', 'minor':'4', 'major':'11111'}
 ]
 
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
@@ -49,7 +49,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
               return el.minor == beacon.minor && el.major == beacon.major;
             });
             if(localization){
-              rtm.sendMessage(`<@${message.user}>: <@${mentionedUser}> ${localization.name}`, message.channel);
+              rtm.sendMessage(`<@${message.user}>: <@${mentionedUser}> ${localization.message}`, message.channel);
             } else {
               rtm.sendMessage(`<@${message.user}>: Unknown beacon! \`${JSON.stringify(beacon)}\``, message.channel);
             }
@@ -68,6 +68,10 @@ var app = express();
 app.set('port', (process.env.PORT || 5000));
 app.get('/', function(request, response) {
   response.send('locator');
+});
+
+app.get('/map', function(request, response) {
+  response.json(beaconsMap);
 });
 
 app.listen(app.get('port'), function() {
