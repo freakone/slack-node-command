@@ -11,9 +11,8 @@
   "author": "freakone",
   "license": "ISC",
   "dependencies": {
-    "slack-client": "github:slackapi/node-slack-sdk",
+    "@slack/client": "3.6.1",
     "express": "4.13.3",
-    "artikcloud-js": "github:artikcloud/artikcloud-js",
     "mosca": "^2.2.0",
     "mqtt": "^2.0.1"
   }
