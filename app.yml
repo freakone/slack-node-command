@@ -1,0 +1,56 @@
+---
+- hosts: vps
+
+  vars:
+    - homeDir: /home/kamil
+    - appDir : ble-locator
+    - repo: slack-node-command
+    - account: freakone
+    - slackToken: __slack_token_here__
+
+  tasks:
+  - name: 'Add Node.js PPA'
+    tags: 'nodejs'
+    become: true
+    become_method: 'sudo'
+    shell: "curl --silent --location https://deb.nodesource.com/setup_7.x | bash -"
+
+  - name: Install Packages
+    become: true
+    apt: name={{ item }} update_cache=yes state=latest
+    with_items:
+      - build-essential
+      - git
+      - mongodb
+      - nodejs
+
+  - service: name=mongodb state=started
+  - shell: mongo mydb --eval "db.createCollection('{{repo}}')"
+
+  - name: Install pm2
+    become: true
+    npm: name=pm2 global=yes production=yes
+
+  - name: Create APP Directory
+    file: path={{homeDir}}/{{appDir}} state=directory
+
+  - name: Git Clone Repo
+    git: repo=https://github.com/{{account}}/{{repo}}.git dest={{homeDir}}/{{appDir}} update=yes force=yes accept_hostkey=yes key_file={{homeDir}}/.ssh/id_rsa
+    register: git_finished
+
+  - name: Running NPM install
+    npm: path={{homeDir}}/{{appDir}}/
+    register: npm_finished
+    when: git_finished.changed
+
+  - name: Stop APP
+    command: pm2 stop {{appDir}} chdir={{homeDir}}/{{appDir}}/
+    ignore_errors: yes
+
+  - name: Start APP
+    command: pm2 start app.js --name {{appDir}} chdir={{homeDir}}/{{appDir}}/
+    ignore_errors: yes
+    environment:
+        MONGO_URL: mongodb://localhost:27017/{{repo}}
+        SLACK_API_TOKEN: "{{slackToken}}"
+    when: npm_finished.changed
