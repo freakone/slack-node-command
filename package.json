@@ -11,6 +11,7 @@
   "author": "freakone",
   "license": "ISC",
   "dependencies": {
+    "@slack/client": "3.6.1",
     "express": "4.13.3",
     "mosca": "^2.2.0",
     "mqtt": "^2.0.1"
