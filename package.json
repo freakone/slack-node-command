@@ -1,5 +1,5 @@
 {
-  "name": "public_nodejs",
+  "name": "ble-locator",
   "version": "1.0.0",
   "description": "Slack localizator",
   "repository": "freakone/slack-node-command",
@@ -11,7 +11,7 @@
   "author": "freakone",
   "license": "ISC",
   "dependencies": {
-    "@slack/client": "^3.5.0",
+    "slack-client": "github:slackapi/node-slack-sdk",
     "express": "4.13.3",
     "artikcloud-js": "github:artikcloud/artikcloud-js",
     "mosca": "^2.2.0",
